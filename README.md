@@ -54,5 +54,23 @@ The GoodWe Solar API is an undocumented API that can be used to obtain data prod
 Luckily, there is an open source Python project [pygoodwe](github.com/yaleman/pygoodwe) that allows access to the inverter's data as long as you're registered on the GoodWe SEMS portal.
 
 Essentially, we instantiate a SingleInverter object (provided by pygoodwe) using credentials stored in a .env file. The init method of this class uses the credentials to login, get the current inverter state and store it as a dictionary.
-In this example, we parse the SingleInverter data dictionary to extract the datapoints of interest then append them to a file in a Cloud Storage bucket.
+In this example, we parse the SingleInverter data dictionary to extract the datapoints of interest then upload them as a blob to a csv file in a Cloud Storage bucket.
 
+
+### GCP Cloud Storage
+Host function source code, store data records
+
+Cloud Storage is the Google Blob storage service (like Amazon S3 or Azure Blob Storage)
+
+Usage of Cloud Storage service requires appropriate permissions. When connecting in the source code, this requires the administration of a Service Account.
+~~~
+# CREATE BUCKET
+gsutil mb gs://solar-storage-service    # bucket for solar data
+
+# PROVISION SERVICE ACCOUNT, GET KEY
+gcloud iam service-accounts-create <SERVICE_ACCOUNT_NAME>
+gcloud projects add-iam-policy-binding <PROJECT_ID> \
+    --member="serviceAccount:<SERVICE_ACCOUNT_NAME>@<PROJECT_ID>.iam.gserviceaccount.com
+gcloud iam service-accounts keys create <KEY_NAME>.json \ 
+    --iam-account=<SERVICE_ACCOUNT_NAME>@<PROJECT_ID>.iam.gserviceaccount.com
+~~~
