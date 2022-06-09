@@ -27,8 +27,9 @@ def dataframe_to_storage_blob_as_csv(bucket_name, dataframe, destination_blob_fi
 def get_current_solar_data():
     inv = SingleInverter(INVERTER_ID, INVERTER_USER, INVERTER_PASS)
 
+    timestamp = inv.data['inverter']['time'].replace('/', '')   # default format includes "/" which messes with folder creation in blob storage
     df = pd.DataFrame({
-        'timestamp': [inv.data['inverter']['time']],
+        'timestamp': [timestamp],
         'current_output_kw': [inv.data['inverter']['output_power']],
         'total_production_today': [inv.data['inverter']['eday']]
     })
