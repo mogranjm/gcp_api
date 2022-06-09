@@ -1,10 +1,5 @@
 # Solar Data Pipe 
-Test sandbox for a batch trigger pipeline with GCP cloud resources and a python-implemented API
+Test sandbox for a data pipeline to extract time series data in batches from a Solar API using GCP resources.
 
 ## Architecture
-![GCP Architecture Flowchart](design/architecture.png)
-GCP Cloud Scheduler
-GCP Cloud PubSub
-GCP Cloud Functions
-GOODWE Solar API
-GCP Cloud Storage
+![GCP Architecture Flowchart](design/architecture.drawio.png)
