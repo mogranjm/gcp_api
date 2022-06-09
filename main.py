@@ -3,6 +3,7 @@ from google.cloud import storage
 from pygoodwe import SingleInverter
 from .src.config import INVERTER_ID, INVERTER_USER, INVERTER_PASS
 
+from src.config import INVERTER_ID, INVERTER_USER, INVERTER_PASS, GCS_BUCKET, GCS_KEY_PATH
 
 def upload_blob(bucket_name, source_file_name, destination_blob_name):
     """Uploads a file to the bucket."""
