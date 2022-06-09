@@ -26,3 +26,17 @@ In this example we have configured a PubSub topic to act as an intermediary betw
 ~~~
 gcloud pubsub topic create get-hourly-solar-data-trigger # gcloud cli command to create a PubSub topic called "trigger-get-hourly-solar-data"
 ~~~
+
+### GCP Cloud Functions
+Call the Solar API, process data and append text file in Cloud Storage
+
+Cloud Functions are serverless, single-purpose functions executed in your preferred runtime.
+
+This is the meat of the data pipeline. Here, we use a Python script to query the GoodWe Solar API for the previous hour's production data of the configured solar inverter.
+The data returned from the API is filtered, processed and appended to a file stored in a Cloud Storage bucket.
+~~~
+gcloud functions deploy get-solar-data \            # gcloud cli command to deploy a cloud function with the name "get-solar-data"
+    --runtime=python39                              # language the function is written in 
+    --trigger-topic=get-hourly-solar-data-trigger   # function trigger (our pubsub topic)
+    --entrypoint=main                               # name of the function as defined in main.py (if python)
+~~~
