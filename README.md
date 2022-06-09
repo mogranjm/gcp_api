@@ -17,3 +17,12 @@ gcloud scheduler jobs create pubsub get-solar   # gcloud cli command to create a
     --message="go solar" \                      # Message content to post to PubSub topic
     --location=australia-southeast1             # Location of the job
 ~~~
+### GCP Pub/Sub
+Receive message from Cloud Scheduler, trigger Cloud Function in response
+
+Pub/Sub is an asynchronous messaging service (similar to Kafka). 
+
+In this example we have configured a PubSub topic to act as an intermediary between Cloud Scheduler and Cloud Functions.
+~~~
+gcloud pubsub topic create get-hourly-solar-data-trigger # gcloud cli command to create a PubSub topic called "trigger-get-hourly-solar-data"
+~~~
