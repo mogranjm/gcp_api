@@ -40,3 +40,12 @@ gcloud functions deploy get-solar-data \            # gcloud cli command to depl
     --trigger-topic=get-hourly-solar-data-trigger   # function trigger (our pubsub topic)
     --entrypoint=main                               # name of the function as defined in main.py (if python)
 ~~~
+
+### GOODWE Solar API
+The GoodWe Solar API is an undocumented API that can be used to obtain data produced by a compatible and configured solar inverter.
+
+Luckily, there is an open source Python project [pygoodwe](github.com/yaleman/pygoodwe) that allows access to the inverter's data as long as you're registered on the GoodWe SEMS portal.
+
+Essentially, we instantiate a SingleInverter object (provided by pygoodwe) using credentials stored in a .env file. The init method of this class uses the credentials to login, get the current inverter state and store it as a dictionary.
+In this example, we parse the SingleInverter data dictionary to extract the datapoints of interest then append them to a file in a Cloud Storage bucket.
+
