@@ -5,23 +5,22 @@ from .src.config import INVERTER_ID, INVERTER_USER, INVERTER_PASS
 
 from src.config import INVERTER_ID, INVERTER_USER, INVERTER_PASS, GCS_BUCKET, GCS_KEY_PATH
 
-def upload_blob(bucket_name, source_file_name, destination_blob_name):
+
+def dataframe_to_storage_blob_as_csv(bucket_name, dataframe, destination_blob_filename):
     """Uploads a file to the bucket."""
     # The ID of your GCS bucket
     # bucket_name = "your-bucket-name"
-    # The path to your file to upload
-    # source_file_name = "local/path/to/file"
     # The ID of your GCS object
-    # destination_blob_name = "storage-object-name"
+    # destination_blob_name = "storage-object-name.csv"
 
-    storage_client = storage.Client()
+    storage_client = storage.Client.from_service_account_json(GCS_KEY_PATH)
     bucket = storage_client.bucket(bucket_name)
-    blob = bucket.blob(destination_blob_name)
+    blob = bucket.blob(destination_blob_filename)
 
-    blob.upload_from_filename(source_file_name)
+    blob.upload_from_string(dataframe.to_csv(), 'text/csv')
 
     print(
-        f"File {source_file_name} uploaded to {destination_blob_name}."
+        f"Data uploaded to {destination_blob_filename}."
     )
 
 
