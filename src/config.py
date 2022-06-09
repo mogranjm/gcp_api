@@ -1,10 +1,13 @@
-from dotenv import dotenv_values
+import os
+from dotenv import load_dotenv
 
-config = dotenv_values("src/.env")
+config = load_dotenv("src/.env")
 
-INVERTER_ID = config["GOODWE_STATION_ID"]
-INVERTER_USER = config["GOODWE_USER"]
-INVERTER_PASS = config["GOODWE_PASSWORD"]
+env = os.environ
 
-GCS_BUCKET = config["GCS_BUCKET_NAME"]
-GCS_KEY_PATH = config["GCS_SERVICE_ACCOUNT_KEY"]
+INVERTER_ID = env.get("GOODWE_STATION_ID")
+INVERTER_USER = env.get("GOODWE_USER")
+INVERTER_PASS = env.get("GOODWE_PASSWORD")
+
+GCS_BUCKET = env.get("GCS_BUCKET_NAME")
+GCS_KEY_PATH = env.get("GCS_SERVICE_ACCOUNT_KEY")
