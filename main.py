@@ -1,7 +1,7 @@
 from google.cloud import storage
-
+from datetime import date
 from pygoodwe import SingleInverter
-from .src.config import INVERTER_ID, INVERTER_USER, INVERTER_PASS
+import pandas as pd
 
 from src.config import INVERTER_ID, INVERTER_USER, INVERTER_PASS, GCS_BUCKET, GCS_KEY_PATH
 
@@ -27,5 +27,10 @@ def dataframe_to_storage_blob_as_csv(bucket_name, dataframe, destination_blob_fi
 def main():
     inv = SingleInverter(INVERTER_ID, INVERTER_USER, INVERTER_PASS)
 
-    current_output_kw = inv.data['inverter']['output_power'] / 1000
-    total_production_today = inv.data['inverter']['eday']
+    df = pd.DataFrame({
+        'timestamp': inv.data['inverter']['time'],
+        'current_output_kw': inv.data['inverter']['output_power'] / 1000,
+        'total_production_today': inv.data['inverter']['eday']
+    })
+
+    dataframe_to_storage_blob_as_csv(GCS_BUCKET, df, f"{date.strftime('%Y%m%d')}/inverter_log_{inv.data['inverter']['time']}")
