@@ -1,6 +1,6 @@
 from dotenv import dotenv_values
 
-config = dotenv_values(".env")
+config = dotenv_values("src/.env")
 
 INVERTER_ID = config["GOODWE_STATION_ID"]
 INVERTER_USER = config["GOODWE_USER"]
