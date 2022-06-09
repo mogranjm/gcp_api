@@ -33,4 +33,8 @@ def get_current_solar_data():
         'total_production_today': [inv.data['inverter']['eday']]
     })
 
-    dataframe_to_storage_blob_as_csv(GCS_BUCKET, df, f"{date.strftime('%Y%m%d')}/inverter_log_{inv.data['inverter']['time']}")
+    dataframe_to_storage_blob_as_csv(GCS_BUCKET, df, f"{date.today().strftime('%Y%m%d')}/inverter_log_{inv.data['inverter']['time']}")
+
+
+if __name__ == "__main__":
+    get_current_solar_data()
