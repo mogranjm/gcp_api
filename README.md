@@ -1,5 +1,5 @@
 # Solar Data Pipe 
-Test sandbox for a data pipeline to extract time series data in batches from a Solar API using GCP resources.
+Test data pipeline to extract time series data in batches from a Solar API using GCP resources.
 
 ## Architecture
 ![GCP Architecture Flowchart](design/architecture.drawio.png)
@@ -14,8 +14,8 @@ In this example we configure Cloud Scheduler to send a message to a PubSub topic
 # CREATE
 gcloud scheduler jobs create pubsub get-solar   # gcloud cli command to create a cloud scheduler job with a PubSub target called "get-solar"
     --schedule="0 * * * *" \                    # schedule (cron format)
-    --topic=trigger-get-solar-data \     # Name of target PubSub topic 
-    --message-body="go solar" \                      # Message content to post to PubSub topic
+    --topic=trigger-get-solar-data \            # Name of target PubSub topic 
+    --message-body="go solar" \                 # Message content to post to PubSub topic
     --location=australia-southeast1             # Location of the job
 
 # UPDATE                                        
