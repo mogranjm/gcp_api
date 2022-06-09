@@ -44,7 +44,7 @@ The data returned from the API is filtered, processed and appended to a file sto
 gcloud functions deploy get-solar-data \                    # gcloud cli command to deploy a cloud function with the name "get-solar-data"
     --runtime=python39                                      # language the function is written in 
     --trigger-topic=trigger-get-solar-data                  # function trigger (our pubsub topic)
-    --source=gs://solar-storage-service/source/code.zip     # source code location
+    --source=gs://<BUCKET_NAME>/<PATH_TO_CODE>.zip          # source code location
     --entry-point=get_current_solar_data                    # name of the function as defined in main.py (if python)
 ~~~
 
