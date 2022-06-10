@@ -34,8 +34,8 @@ def get_current_solar_data(event, context):
         'total_production_today': [inv.data['inverter']['eday']]
     })
 
-    timestamp = datetime.datetime.strptime(inv.data['inverter']['time'], "%d%m%Y %H:%M%:%S")
-    timestamp = datetime.datetime.strftime(timestamp, "%Y%m%d %H%M")
+    timestamp = datetime.datetime.strptime(inv.data['inverter']['time'], "%d/%m/%Y %H:%M:%S")
+    timestamp = datetime.datetime.strftime(timestamp, "%Y%m%d %H:%M")
 
     dataframe_to_storage_blob_as_csv(
         GCS_BUCKET,
