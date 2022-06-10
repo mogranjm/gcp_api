@@ -4,7 +4,7 @@ import pandas as pd
 from google.cloud import storage
 from pygoodwe import SingleInverter
 
-from src.config import INVERTER_ID, INVERTER_USER, INVERTER_PASS, GCS_BUCKET, GCS_KEY_PATH
+from src.config import INVERTER_ID, INVERTER_USER, INVERTER_PASS, GCS_BUCKET
 
 
 def dataframe_to_storage_blob_as_csv(bucket_name, dataframe, destination_blob_filename):
@@ -14,7 +14,7 @@ def dataframe_to_storage_blob_as_csv(bucket_name, dataframe, destination_blob_fi
     # The ID of your GCS object
     # destination_blob_name = "storage-object-name.csv"
 
-    storage_client = storage.Client.from_service_account_json(GCS_KEY_PATH)
+    storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_filename)
 
