@@ -16,6 +16,6 @@ GCS_KEY_PATH = env.get("GCS_SERVICE_ACCOUNT_KEY")
 
 # If service account creds not present in environment (they should be in prod), load them from local
 if env.get("GOOGLE_APPLICATION_CREDENTIALS") is None:
-    with open(GCS_KEY_PATH, 'r') as f:
-        data = f.read()
-        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = json.loads(data)
+    with open(GCS_KEY_PATH) as f:
+        data = json.load(f)
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = json.loads(data)
