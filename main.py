@@ -1,4 +1,4 @@
-from datetime import date
+import datetime
 
 import pandas as pd
 from google.cloud import storage
@@ -34,10 +34,13 @@ def get_current_solar_data(event, context):
         'total_production_today': [inv.data['inverter']['eday']]
     })
 
+    timestamp = datetime.datetime.strptime(inv.data['inverter']['time'], "%d%m%Y %H:%M%:%S")
+    timestamp = datetime.datetime.strftime(timestamp, "%Y%m%d %H%M")
+
     dataframe_to_storage_blob_as_csv(
         GCS_BUCKET,
         df,
-        f"{date.today().strftime('%Y%m%d')}/inverter_log_{inv.data['inverter']['time'].replace('/', '')}"  # default format includes '/' which messes with folder creation in blob storage}"
+        f"{datetime.date.today().strftime('%Y%m%d')}/inverter_log_{timestamp}"  # default format includes '/' which messes with folder creation in blob storage}"
     )
 
 
