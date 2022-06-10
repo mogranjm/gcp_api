@@ -25,7 +25,7 @@ def dataframe_to_storage_blob_as_csv(bucket_name, dataframe, destination_blob_fi
     )
 
 
-def get_current_solar_data():
+def get_current_solar_data(event, context):
     inv = SingleInverter(INVERTER_ID, INVERTER_USER, INVERTER_PASS)
 
     df = pd.DataFrame({
