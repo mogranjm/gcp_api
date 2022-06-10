@@ -45,4 +45,6 @@ def get_current_solar_data(event, context):
 
 
 if __name__ == "__main__":
-    get_current_solar_data()
+    event = ''
+    context = ''
+    get_current_solar_data(event, context)
