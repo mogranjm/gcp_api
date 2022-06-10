@@ -1,7 +1,8 @@
-from google.cloud import storage
 from datetime import date
-from pygoodwe import SingleInverter
+
 import pandas as pd
+from google.cloud import storage
+from pygoodwe import SingleInverter
 
 from src.config import INVERTER_ID, INVERTER_USER, INVERTER_PASS, GCS_BUCKET, GCS_KEY_PATH
 
@@ -36,7 +37,7 @@ def get_current_solar_data():
     dataframe_to_storage_blob_as_csv(
         GCS_BUCKET,
         df,
-        f"{date.today().strftime('%Y%m%d')}/inverter_log_{inv.data['inverter']['time'].replace('/', '')}  # default format includes "/" which messes with folder creation in blob storage}"
+        f"{date.today().strftime('%Y%m%d')}/inverter_log_{inv.data['inverter']['time'].replace('/', '')}"  # default format includes '/' which messes with folder creation in blob storage}"
     )
 
 
