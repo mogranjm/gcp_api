@@ -1,8 +1,9 @@
-import datetime
+from datetime import datetime
 
 import pandas as pd
 from google.cloud import storage
 from pygoodwe import SingleInverter
+from pytz import timezone
 
 from src.config import INVERTER_ID, INVERTER_USER, INVERTER_PASS, GCS_BUCKET
 
@@ -34,13 +35,13 @@ def get_current_solar_data(event, context):
         'total_production_today': [inv.data['inverter']['eday']]
     })
 
-    timestamp = datetime.datetime.strptime(inv.data['inverter']['time'], "%d/%m/%Y %H:%M:%S")
-    timestamp = datetime.datetime.strftime(timestamp, "%Y%m%d %H:%M")
+    timestamp = datetime.strptime(inv.data['inverter']['time'], "%m/%d/%Y %H:%M:%S")
+    timestamp = datetime.strftime(timestamp, "%Y%m%d %H:%M")
 
     dataframe_to_storage_blob_as_csv(
         GCS_BUCKET,
         df,
-        f"{datetime.date.today().strftime('%Y%m%d')}/inverter_log_{timestamp}"  # default format includes '/' which messes with folder creation in blob storage}"
+        f"{datetime.now(timezone('Australia/Melbourne')).strftime('%Y%m%d')}/inverter_log_{timestamp}"  # default format includes '/' which messes with folder creation in blob storage}"
     )
 
 
