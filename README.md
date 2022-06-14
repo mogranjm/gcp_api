@@ -3,7 +3,17 @@ Test data pipeline to extract time series data in batches from a Solar API using
 
 ## Architecture
 ![GCP Architecture Flowchart](design/architecture.drawio.png)
-
+```mermaid
+flowchart 
+    subgraph gcp_ecosystem
+        init_ingest["fa:fa-clock Cloud Scheduler"] --> trigger_ingest[fa:fa-atom Pub/Sub] --> ingest_function[fa:fa-python Ingestion CloudFunction] 
+        write_log[fa:fa-server CloudStorage blob]
+    end
+    subgraph goodwe
+        api_log["fa:fa-sun API"] -- fa:fa-python Python --> write_log
+    end
+    ingest_function -- fa:fa-python Python --> goodwe
+```
 ### GCP Cloud Scheduler
 Hourly trigger to publish a message to a PubSub topic.
 
